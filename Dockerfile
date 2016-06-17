@@ -11,6 +11,12 @@ ADD docker_files/datanode-run.sh /apps/datanode-run.sh
 ADD docker_files/nodemanager-run.sh /apps/nodemanager-run.sh
 RUN chmod a+x /apps/*.sh
 
+# declare the volumes
+RUN mkdir /etc/hadoop/conf.bb && \
+    update-alternatives --install /etc/hadoop/conf hadoop-conf /etc/hadoop/conf.bb 1 && \
+    update-alternatives --set hadoop-conf /etc/hadoop/conf.bb
+VOLUME /etc/hadoop/conf.bb
+
 # internal ports
 EXPOSE 8040 8041
 
