@@ -1,11 +1,14 @@
 # Pull base image.
-#FROM bigboards/cdh-base-__arch__
-FROM bigboards/cdh-base-x86_64
+FROM bigboards/cdh-base-__arch__
 
 MAINTAINER bigboards
 USER root 
 
-RUN apt-get update && apt-get install -y hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce 
+RUN apt-get update \
+    && apt-get install -y hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*
 
 ADD docker_files/datanode-run.sh /apps/datanode-run.sh
 ADD docker_files/nodemanager-run.sh /apps/nodemanager-run.sh
