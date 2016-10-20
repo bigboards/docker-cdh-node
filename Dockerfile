@@ -1,11 +1,15 @@
 # Pull base image.
-FROM bigboards/cdh-base-__arch__
+FROM bigboards/cdh-base-x86_64
 
 MAINTAINER bigboards
 USER root 
 
 RUN apt-get update \
-    && apt-get install -y hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce \
+    && apt-get install -y hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce \ 
+                          build-essential gfortran python libssl-dev libffi-dev libblas-dev \ 
+                          liblapack-dev libatlas-base-dev libpng-dev libjpeg8-dev \
+                          libfreetype6-dev python-pip python-dev pkg-config \
+    && pip install --upgrade pip Cython ConfigParser requests numpy scipy pandas scikit-learn matplotlib sqlalchemy seaborn ibis py4j sparkts \
     && apt-get clean \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*
