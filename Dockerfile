@@ -17,6 +17,7 @@ RUN apt-get update \
 ADD docker_files/datanode-run.sh /apps/datanode-run.sh
 ADD docker_files/nodemanager-run.sh /apps/nodemanager-run.sh
 RUN chmod a+x /apps/*.sh
+RUN chmod g+rwx /var/run/hadoop-hdfs
 
 # declare the volumes
 RUN mkdir /etc/hadoop/conf.bb && \
